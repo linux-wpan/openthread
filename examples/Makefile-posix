@@ -83,6 +83,7 @@ TargetTuple                     = $(shell ${AbsTopSourceDir}/third_party/nlbuild
 # If the user has asserted COVERAGE, alter the configuration options
 # accordingly.
 
+ifeq ($(AUTOCONF_OPTIONS),)
 configure_OPTIONS               = \
     --enable-cli                  \
     --enable-ncp                  \
@@ -90,6 +91,11 @@ configure_OPTIONS               = \
     --with-examples=posix         \
     --with-platform-info=POSIX    \
     $(NULL)
+else
+configure_OPTIONS               = \
+    $(AUTOCONF_OPTIONS)           \
+    $(NULL)
+endif
 
 ifeq ($(COVERAGE),1)
 configure_OPTIONS              += --enable-coverage --enable-commissioner --enable-joiner
