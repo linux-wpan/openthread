@@ -44,6 +44,7 @@ libopenthread_posix_a_SOURCES             = \
     logging.c                               \
     platform.c                              \
     radio.c                                 \
+    radio-udp.c                             \
     random.c                                \
     uart.c                                  \
     flash.c                                 \
