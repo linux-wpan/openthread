@@ -35,6 +35,7 @@ libopenthread_posix_a_CPPFLAGS            = \
     -I$(top_srcdir)/examples/platforms      \
     -I$(top_srcdir)/src/core                \
     -D_GNU_SOURCE                           \
+    $(OPENTHREAD_TARGET_DEFINES)            \
     $(NULL)
 
 libopenthread_posix_a_SOURCES             = \
