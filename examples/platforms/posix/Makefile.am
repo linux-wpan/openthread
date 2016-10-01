@@ -44,7 +44,6 @@ libopenthread_posix_a_SOURCES             = \
     logging.c                               \
     platform.c                              \
     radio.c                                 \
-    radio-udp.c                             \
     random.c                                \
     uart.c                                  \
     flash.c                                 \
@@ -59,6 +58,16 @@ endif
 if OPENTHREAD_ENABLE_NCP_SPI
 libopenthread_posix_a_SOURCES           += \
     spi-stubs.c                            \
+    $(NULL)
+endif
+
+if OPENTHREAD_ENABLE_AF_PACKET
+libopenthread_posix_a_SOURCES           += \
+    radio-af-packet.c                      \
+    $(NULL)
+else
+libopenthread_posix_a_SOURCES           += \
+    radio-udp.c                            \
     $(NULL)
 endif
 

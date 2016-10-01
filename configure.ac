@@ -604,6 +604,47 @@ AM_CONDITIONAL([OPENTHREAD_ENABLE_CERT_LOG], [test "${enable_cert_log}" = "yes"]
 AC_DEFINE_UNQUOTED([OPENTHREAD_ENABLE_CERT_LOG],[${OPENTHREAD_ENABLE_CERT_LOG}],[Define to 1 if you want to enable log for certification test])
 
 #
+# Linux AF_PACKET radio support
+#
+
+AC_ARG_ENABLE(af_packet,
+    [AS_HELP_STRING([--enable-af-packet],[Enable AF_PACKET posix radio support@<:@default=no@:>@.])],
+    [
+        case "${enableval}" in
+
+        no|yes)
+            enable_af_packet=${enableval}
+            ;;
+
+        *)
+            AC_MSG_ERROR([Invalid value ${enable_af_packet} for --enable-af-packet])
+            ;;
+        esac
+    ],
+    [enable_af_packet=no])
+
+if test "$enable_af_packet" = "yes"; then
+    case ${target_os} in
+
+    *linux*)
+        ;;
+
+    *)
+        AC_MSG_ERROR([Invalid target_os ${target_os} which is incompatible with --enable-af-packet])
+        ;;
+    esac
+
+    OPENTHREAD_ENABLE_AF_PACKET=1
+else
+    OPENTHREAD_ENABLE_AF_PACKET=0
+fi
+
+AC_MSG_RESULT(${enable_af_packet})
+AC_SUBST(OPENTHREAD_ENABLE_AF_PACKET)
+AM_CONDITIONAL([OPENTHREAD_ENABLE_AF_PACKET], [test "${enable_af_packet}" = "yes"])
+AC_DEFINE_UNQUOTED([OPENTHREAD_ENABLE_AF_PACKET],[${OPENTHREAD_ENABLE_AF_PACKET}],[Define to 1 if you want to use a AF_PACKET posix radio])
+
+#
 # Examples
 #
 
@@ -858,6 +899,7 @@ AC_MSG_NOTICE([
   OpenThread Diagnostics support            : ${enable_diag}
   OpenThread Cli logging support            : ${enable_cli_logging}
   OpenThread Certification log support      : ${enable_cert_log}
+  OpenThread AF_PACKET posix radio          : ${enable_af_packet}
   OpenThread examples                       : ${OPENTHREAD_EXAMPLES}
   OpenThread platform information           : ${PLATFORM_INFO}
 
